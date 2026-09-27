@@ -414,7 +414,15 @@ const DINOS = {
   meg:     { id:'meg', group:'pal', name:'Meg', kind:'Megalodon', blurb:'The biggest shark ever. Mega bite!', hp:120, voice:'gurgle', pitch:55, shout:'Roar',
              moves:[ M('Mega Bite','🦈','big',22,30,['chomp','bonk'],'CHOMP!',{miss:.18}), M('Feeding Frenzy','🌀','multi',5,8,['chomp'],'FRENZY!',{hits:[2,4],miss:.1}), M('Fin Slap','🌊','shake',10,14,['splash','bonk'],'SLAP!') ] },
   shard:   { id:'shard', group:'myth', name:'Shard', kind:'Crystal raptor', blurb:'Glowing purple spikes. Super sneaky.', hp:100, voice:'screech', pitch:340, shout:'Shriek',
-             moves:[ M('Crystal Storm','💎','mega',9,13,['slash','sparkle'],'CRYSTAL STORM!',{hits:3}), M('Raptor Pounce','🎯','big',18,26,['whoosh','bonk'],'POUNCE!',{miss:.15}), M('Tail Whip','🌀','dizzy',8,12,['whip','bonk'],'WHIP!',{stun:.4}) ] }
+             moves:[ M('Crystal Storm','💎','mega',9,13,['slash','sparkle'],'CRYSTAL STORM!',{hits:3}), M('Raptor Pounce','🎯','big',18,26,['whoosh','bonk'],'POUNCE!',{miss:.15}), M('Tail Whip','🌀','dizzy',8,12,['whip','bonk'],'WHIP!',{stun:.4}) ] },
+  dilo:    { id:'dilo', group:'dino', name:'Frilly', kind:'Dilophosaurus', blurb:'Pops out a giant frill. Surprise!', hp:90, voice:'screech', pitch:480, shout:'Hiss',
+             moves:[ M('Snappy Bites','🦷','multi',4,7,['chomp'],'SNAP!',{hits:[2,4],miss:.1}), M('Goo Spit','💦','dizzy',7,11,['splash'],'SPLAT!',{stun:.5}), M('Jump Kick','🦶','shake',10,14,['stomp'],'KICK!') ] },
+  iggy:    { id:'iggy', group:'dino', name:'Iggy', kind:'Iguanodon', blurb:'Pointy thumb spikes. Very handy!', hp:115, voice:'roar', pitch:150, shout:'Bellow',
+             moves:[ M('Thumb Spike','👍','big',17,25,['slash','bonk'],'JAB!',{miss:.12}), M('Tail Thump','🌀','dizzy',8,12,['whip','bonk'],'THUMP!',{stun:.4}), STOMP ] },
+  rhino:   { id:'rhino', group:'pal', name:'Bumper', kind:'Woolly rhino', blurb:'Shaggy, grumpy, giant horn.', hp:125, voice:'snarl', pitch:95, shout:'Snort',
+             moves:[ M('Horn Ram','🦏','big',18,26,['whoosh','bonk'],'RAM!',{miss:.12}), M('Fuzzy Charge','💨','dizzy',8,12,['stomp','bonk'],'CRASH!',{stun:.4}), STOMP ] },
+  blizzard:{ id:'blizzard', group:'myth', name:'Blizzard', kind:'Hybrid rex', blurb:'Ghost-white giant with red spikes.', hp:120, voice:'roar', pitch:72, shout:'Roar',
+             moves:[ M('Ghost Chomp','👻','big',22,30,['chomp','bonk'],'CHOMP!',{miss:.18}), M('Hook Claws','🪝','multi',5,8,['slash'],'SLASH!',{hits:[2,3],miss:.1}), M('Spike Shake','🔺','shake',10,14,['stomp'],'STOMP!') ] }
 };
 const POWERUPS = [
   { id:'shield', ico:'🛡️', name:'Shield' },
@@ -792,6 +800,95 @@ function dinoSVG(id){
       <path d="M156 118 l7 -3 M156 118 l5 6 M156 118 l9 3" fill="none" stroke-width="3.5"/>
       ${eye(170,56,5)}
       <circle cx="172" cy="57" r="2.5" fill="${cr}" stroke="none"/>`+close;
+  }
+  if(id==='dilo'){
+    const b='#6E8A3A', d='#556D2C', be='#D8E0A0', fr='#FF5A6E', fi='#FFC2C8';
+    return open+`
+      <path d="M62 96 Q32 92 8 78 Q22 106 64 112Z" fill="${b}"/>
+      <rect x="70" y="106" width="16" height="44" rx="7" fill="${d}"/>
+      <rect x="94" y="108" width="16" height="42" rx="7" fill="${b}"/>
+      <path d="M64 150 L90 150 Q92 158 86 158 L68 158 Q62 156 64 150Z" fill="${d}"/>
+      <path d="M88 150 L116 150 Q118 158 112 158 L92 158 Q86 156 88 150Z" fill="${d}"/>
+      <ellipse cx="90" cy="98" rx="34" ry="20" transform="rotate(-15 90 98)" fill="${b}"/>
+      <ellipse cx="96" cy="106" rx="18" ry="8" transform="rotate(-15 96 106)" fill="${be}" stroke="none"/>
+      <g fill="${d}" stroke="none"><circle cx="78" cy="94" r="3.5"/><circle cx="92" cy="88" r="3.5"/><circle cx="70" cy="102" r="3"/></g>
+      <path d="M106 90 Q116 66 130 58 L142 70 Q128 78 122 100Z" fill="${b}"/>
+      <ellipse cx="146" cy="62" rx="34" ry="32" fill="${fr}"/>
+      <ellipse cx="146" cy="62" rx="22" ry="21" fill="${fi}" stroke="none"/>
+      <path d="M146 62 L146 32 M146 62 L120 48 M146 62 L118 72 M146 62 L130 90 M146 62 L160 90 M146 62 L174 44" fill="none" stroke="${fr}" stroke-width="3"/>
+      <path d="M144 46 Q146 24 158 28 Q154 36 154 46Z" fill="${fr}"/>
+      <path d="M156 44 Q162 22 174 28 Q168 36 168 48Z" fill="${fr}"/>
+      <path d="M136 52 Q150 40 176 46 L196 56 Q200 64 192 66 L144 68Z" fill="${b}"/>
+      <path d="M146 66 L190 66 Q186 76 160 74Z" fill="${b}"/>
+      <path d="M160 66 l3 4 l3 -4 M172 66 l3 4 l3 -4" fill="#fff" stroke-width="2"/>
+      ${eye(164,54,5)}
+      <path d="M116 102 Q128 106 132 116" fill="none" stroke-width="5"/>
+      <path d="M132 116 l6 -2 M132 116 l4 5" fill="none" stroke-width="3"/>`+close;
+  }
+  if(id==='iggy'){
+    const b='#9A8660', d='#7A6844', be='#E6D8B4';
+    return open+`
+      <path d="M62 102 Q30 112 6 142 Q42 132 66 120Z" fill="${b}"/>
+      <rect x="68" y="106" width="22" height="50" rx="10" fill="${d}"/>
+      <rect x="96" y="108" width="22" height="48" rx="10" fill="${b}"/>
+      <ellipse cx="96" cy="96" rx="44" ry="28" transform="rotate(-15 96 96)" fill="${b}"/>
+      <ellipse cx="102" cy="108" rx="24" ry="10" transform="rotate(-15 102 108)" fill="${be}" stroke="none"/>
+      <path d="M72 84 q4 10 0 20 M88 76 q4 10 0 22 M104 72 q4 10 0 20" fill="none" stroke="${d}" stroke-width="4"/>
+      <path d="M120 84 Q132 54 146 38 L162 46 Q148 66 140 96Z" fill="${b}"/>
+      <path d="M142 30 Q156 18 178 26 L194 36 Q198 44 190 46 L152 48 Q140 42 142 30Z" fill="${b}"/>
+      <path d="M186 34 L196 38 Q198 44 190 46 L184 44Z" fill="${be}"/>
+      <circle cx="188" cy="34" r="2" fill="${INK}" stroke="none"/>
+      ${eye(162,32,5)}
+      <path d="M170 42 q6 3 12 0" fill="none" stroke-width="3"/>
+      <path d="M134 98 Q150 102 154 114" fill="none" stroke-width="7"/>
+      <path d="M150 112 L166 98 L160 118Z" fill="#FFF6E0" stroke-width="3.5"/>`+close;
+  }
+  if(id==='rhino'){
+    const b='#8A6A3E', d='#6B4F2A', h='#EDE0C0';
+    return open+`
+      <path d="M38 88 Q26 92 30 104" fill="none" stroke-width="5"/>
+      <rect x="52" y="112" width="26" height="46" rx="11" fill="${d}"/>
+      <rect x="116" y="112" width="26" height="46" rx="11" fill="${d}"/>
+      <rect x="76" y="114" width="26" height="44" rx="11" fill="${b}"/>
+      <rect x="140" y="114" width="26" height="44" rx="11" fill="${b}"/>
+      <ellipse cx="96" cy="96" rx="62" ry="36" fill="${b}"/>
+      <path d="M66 70 q4 6 0 12 M86 64 q4 6 0 12 M106 64 q4 6 0 12 M126 70 q4 6 0 12 M74 94 q4 6 0 12 M98 88 q4 6 0 12 M122 94 q4 6 0 12" fill="none" stroke="${d}" stroke-width="3"/>
+      <path d="M146 78 Q176 70 198 94 Q206 114 190 122 L156 120 Q140 104 146 78Z" fill="${b}"/>
+      <path d="M150 76 L146 60 L162 72Z" fill="${b}"/>
+      <path d="M186 96 Q192 60 210 44 Q210 78 200 104Z" fill="${h}"/>
+      <path d="M172 92 Q174 78 184 72 Q186 86 182 96Z" fill="${h}"/>
+      ${eye(166,94,5)}
+      <circle cx="196" cy="112" r="2.5" fill="${INK}" stroke="none"/>
+      <path d="M184 118 q6 2 10 -2" fill="none" stroke-width="3"/>`+close;
+  }
+  if(id==='blizzard'){
+    const b='#E4E8EC', d='#A9B0B8', r='#D93A3A', m='#FF8A6A';
+    let up='M146 58', lo='M152 80';
+    for(let x=146;x<202;x+=9){ up+=' l3.5 8 l3.5 -8 m2 0'; }
+    for(let x=152;x<196;x+=9){ lo+=' l3.5 -8 l3.5 8 m2 0'; }
+    return open+`
+      <path d="M22 96 Q50 72 92 80 L96 118 Q54 122 22 96Z" fill="${b}"/>
+      <rect x="78" y="112" width="24" height="46" rx="11" fill="${d}"/>
+      <rect x="112" y="114" width="24" height="44" rx="11" fill="${b}"/>
+      <g fill="${r}" stroke-width="3.5">
+        <path d="M62 84 L66 66 L78 80Z"/><path d="M76 76 L84 56 L94 74Z"/><path d="M92 72 L102 50 L110 72Z"/>
+        <path d="M108 72 L120 52 L126 76Z"/><path d="M122 76 L136 58 L138 82Z"/>
+      </g>
+      <ellipse cx="140" cy="78" rx="18" ry="20" fill="${b}"/>
+      <ellipse cx="106" cy="100" rx="46" ry="34" fill="${b}"/>
+      <path d="M72 92 q6 8 0 18 M88 86 q6 8 0 20 M104 84 q6 8 0 18" fill="none" stroke="${d}" stroke-width="4"/>
+      <path d="M140 104 Q162 110 164 130" fill="none" stroke-width="7"/>
+      <path d="M164 130 l8 -2 M164 130 l3 8 M164 130 l9 5" fill="none" stroke-width="3.5"/>
+      <path d="M142 56 L206 52 L200 88 L152 80Z" fill="${m}"/>
+      <path d="M126 34 Q150 22 196 30 L212 42 Q214 52 206 54 L140 60Z" fill="${b}"/>
+      <path d="M130 34 Q140 20 162 24 Q150 30 146 40Z" fill="${r}"/>
+      <path d="M150 80 L200 88 Q196 100 162 96 Q148 92 150 80Z" fill="${b}"/>
+      <path d="${up}" fill="#fff" stroke-width="2"/>
+      <path d="${lo}" fill="#fff" stroke-width="2"/>
+      <ellipse cx="170" cy="40" rx="11" ry="8" fill="${d}" stroke="none"/>
+      ${eye(170,40,6)}
+      <circle cx="173" cy="41" r="2.2" fill="${r}" stroke="none"/>
+      <circle cx="204" cy="42" r="2.3" fill="${INK}" stroke="none"/>`+close;
   }
   const b='#E0A93E', d='#B9822A', k='#9C6B1E';
   return open+`
