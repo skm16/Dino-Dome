@@ -408,7 +408,13 @@ const DINOS = {
   smilo:   { id:'smilo', group:'pal', name:'Fang', kind:'Saber-toothed cat', blurb:'Spotty, sneaky, huge fangs.', hp:100, voice:'snarl', pitch:150, shout:'Snarl',
              moves:[ M('Saber Bite','🗡️','big',20,28,['slash','chomp'],'CHOMP!',{miss:.15}), M('Paw Swipe','🐯','multi',6,9,['slash'],'SWIPE!',{hits:[2,3],miss:.1}), M('Leap Slam','💥','shake',10,14,['stomp','bonk'],'SLAM!') ] },
   amphib:  { id:'amphib', group:'pal', name:'Swampy', kind:'Giant amphibian', blurb:'Swamp giant with a mega mouth.', hp:120, voice:'croak', pitch:85, shout:'Croak',
-             moves:[ M('Mega Mouth','👄','big',18,26,['chomp','gulp'],'CHOMP!',{miss:.12}), M('Swamp Slime','🟢','dizzy',8,12,['splash'],'SPLAT!',{stun:.4}), M('Belly Flop','🐸','shake',10,14,['stomp','splash'],'FLOP!') ] }
+             moves:[ M('Mega Mouth','👄','big',18,26,['chomp','gulp'],'CHOMP!',{miss:.12}), M('Swamp Slime','🟢','dizzy',8,12,['splash'],'SPLAT!',{stun:.4}), M('Belly Flop','🐸','shake',10,14,['stomp','splash'],'FLOP!') ] },
+  terror:  { id:'terror', group:'pal', name:'Hooky', kind:'Terror bird', blurb:'Giant bird with a hatchet beak.', hp:95, voice:'screech', pitch:520, shout:'Squawk',
+             moves:[ M('Beak Axe','🪓','big',20,28,['whoosh','chomp'],'CHOP!',{miss:.15}), M('Speedy Kicks','🦵','multi',5,8,['stomp'],'KICK!',{hits:[2,4],miss:.1}), M('Feather Fluff','🪶','dizzy',6,10,['whoosh','sparkle'],'FLUFF!',{stun:.45}) ] },
+  meg:     { id:'meg', group:'pal', name:'Meg', kind:'Megalodon', blurb:'The biggest shark ever. Mega bite!', hp:120, voice:'gurgle', pitch:55, shout:'Roar',
+             moves:[ M('Mega Bite','🦈','big',22,30,['chomp','bonk'],'CHOMP!',{miss:.18}), M('Feeding Frenzy','🌀','multi',5,8,['chomp'],'FRENZY!',{hits:[2,4],miss:.1}), M('Fin Slap','🌊','shake',10,14,['splash','bonk'],'SLAP!') ] },
+  shard:   { id:'shard', group:'myth', name:'Shard', kind:'Crystal raptor', blurb:'Glowing purple spikes. Super sneaky.', hp:100, voice:'screech', pitch:340, shout:'Shriek',
+             moves:[ M('Crystal Storm','💎','mega',9,13,['slash','sparkle'],'CRYSTAL STORM!',{hits:3}), M('Raptor Pounce','🎯','big',18,26,['whoosh','bonk'],'POUNCE!',{miss:.15}), M('Tail Whip','🌀','dizzy',8,12,['whip','bonk'],'WHIP!',{stun:.4}) ] }
 };
 const POWERUPS = [
   { id:'shield', ico:'🛡️', name:'Shield' },
@@ -715,6 +721,77 @@ function dinoSVG(id){
       ${eye(170,48,7.5)}
       <path d="M160 36 L182 42" fill="none" stroke-width="5"/>
       <circle cx="201" cy="44" r="2.3" fill="${INK}" stroke="none"/>`+close;
+  }
+  if(id==='terror'){
+    const b='#3F4A3A', d='#2C3528', w='#C9B84A', lg='#7A7445', bk='#FFD23F';
+    return open+`
+      <path d="M62 92 Q34 82 20 66 Q24 96 58 106Z" fill="${d}"/>
+      <path d="M30 76 L44 88 M26 86 L42 96" fill="none" stroke="${b}" stroke-width="3"/>
+      <rect x="74" y="108" width="12" height="46" rx="5" fill="${lg}"/>
+      <rect x="100" y="108" width="12" height="46" rx="5" fill="${lg}"/>
+      <path d="M66 156 L94 156 M80 156 L72 148" fill="none" stroke-width="5"/>
+      <path d="M92 156 L122 156 M106 156 L98 148" fill="none" stroke-width="5"/>
+      <ellipse cx="92" cy="94" rx="40" ry="24" fill="${b}"/>
+      <path d="M74 86 Q98 76 118 90 Q104 104 78 100Z" fill="${w}"/>
+      <path d="M84 90 q6 4 12 0 M92 96 q6 4 12 0" fill="none" stroke="${d}" stroke-width="3"/>
+      <path d="M110 86 Q118 54 132 34 L150 38 Q136 62 128 98Z" fill="${b}"/>
+      <path d="M122 58 l6 3 M118 72 l6 3" fill="none" stroke="${d}" stroke-width="3"/>
+      <ellipse cx="146" cy="32" rx="18" ry="15" fill="${b}"/>
+      <path d="M150 34 L190 30 Q198 36 194 46 L156 42Z" fill="#C9404F"/>
+      <path d="M154 36 L160 44 L186 46 Q192 58 170 56 Q156 52 154 36Z" fill="${bk}"/>
+      <path d="M150 18 Q186 8 204 26 Q210 40 198 44 Q200 34 188 32 L154 36Z" fill="${bk}"/>
+      <path d="M162 20 Q178 16 190 22" fill="none" stroke="#fff" stroke-width="3"/>
+      ${eye(148,26,5)}
+      <path d="M138 18 l4 -8 M146 16 l2 -9" fill="none" stroke-width="3.5"/>`+close;
+  }
+  if(id==='meg'){
+    const b='#8A96A3', d='#6B7784', be='#F2F4F5';
+    let up='M172 96', lo='M172 114';
+    for(let x=172;x<204;x+=8){ up+=' l3 6 l3 -6 m2 0'; lo+=' l3 -6 l3 6 m2 0'; }
+    return open+`
+      <ellipse cx="108" cy="156" rx="92" ry="8" fill="#7FD3FF" stroke-width="3"/>
+      <path d="M30 100 L4 62 Q20 96 6 136Z" fill="${d}"/>
+      <path d="M96 82 L114 40 L134 84Z" fill="${d}"/>
+      <path d="M20 100 Q60 74 130 78 Q176 80 206 94 L206 118 Q176 128 130 126 Q60 124 20 100Z" fill="${b}"/>
+      <path d="M40 106 Q90 128 160 122 Q140 112 90 110 Q60 108 40 106Z" fill="${be}" stroke="none"/>
+      <path d="M126 116 Q132 140 112 152 Q112 134 104 120Z" fill="${d}"/>
+      <path d="M150 98 q-4 8 0 16 M142 98 q-4 8 0 16 M134 98 q-4 8 0 16" fill="none" stroke="${d}" stroke-width="3"/>
+      <path d="M170 94 L212 88 L208 124 L170 116Z" fill="#C9404F"/>
+      <path d="M170 90 Q196 84 214 86 L212 92 L172 98Z" fill="${b}"/>
+      <path d="M170 114 L208 122 Q204 132 178 128 Q166 124 170 114Z" fill="${be}"/>
+      <path d="${up}" fill="#fff" stroke-width="2"/>
+      <path d="${lo}" fill="#fff" stroke-width="2"/>
+      <circle cx="166" cy="88" r="5" fill="${INK}" stroke="none"/>
+      <circle cx="167.5" cy="86.5" r="1.6" fill="#fff" stroke="none"/>`+close;
+  }
+  if(id==='shard'){
+    const b='#3A3656', d='#2A2740', be='#6E6890', cr='#B77BE8', cr2='#E0B8FF';
+    return open+`
+      <path d="M74 96 Q36 90 30 56 Q28 34 42 24" fill="none" stroke-width="15"/>
+      <path d="M74 96 Q36 90 30 56 Q28 34 42 24" fill="none" stroke="${b}" stroke-width="7"/>
+      <rect x="76" y="104" width="16" height="44" rx="7" fill="${d}"/>
+      <rect x="102" y="106" width="16" height="42" rx="7" fill="${b}"/>
+      <path d="M70 148 L96 148 Q98 156 92 158 L74 158 Q68 156 70 148Z" fill="${d}"/>
+      <path d="M96 148 L124 148 Q126 156 120 158 L100 158 Q94 156 96 148Z" fill="${d}"/>
+      <path d="M78 148 q-8 -6 -2 -14 M104 148 q-8 -6 -2 -14" fill="none" stroke-width="4"/>
+      <g fill="${cr}" stroke-width="3.5">
+        <path d="M66 92 L66 70 L80 86Z"/><path d="M78 86 L84 58 L96 82Z"/><path d="M94 82 L104 50 L114 80Z"/>
+        <path d="M112 82 L124 54 L130 84Z"/><path d="M128 84 L142 62 L144 90Z"/><path d="M140 82 L156 58 L154 86Z"/>
+      </g>
+      <g fill="${cr2}" stroke="none"><path d="M86 66 L88 76 L92 74Z"/><path d="M104 58 L106 72 L110 70Z"/><path d="M124 62 L124 74 L128 72Z"/></g>
+      <ellipse cx="106" cy="98" rx="38" ry="20" transform="rotate(-10 106 98)" fill="${b}"/>
+      <ellipse cx="112" cy="106" rx="20" ry="8" transform="rotate(-10 112 106)" fill="${be}" stroke="none"/>
+      <path d="M130 88 Q138 68 154 62 L166 74 Q152 80 146 98Z" fill="${b}"/>
+      <path d="M162 66 L204 64 L198 82 L164 78Z" fill="#C9404F"/>
+      <path d="M150 58 Q160 44 186 50 L206 60 Q210 66 204 68 L162 70Z" fill="${b}"/>
+      <path d="M164 76 L198 82 Q196 90 170 88 Q160 84 164 76Z" fill="${b}"/>
+      <path d="M170 68 l3 5 l3 -5 M180 68 l3 5 l3 -5 M190 67 l3 5 l3 -5" fill="#fff" stroke-width="2.5"/>
+      <path d="M172 80 l3 -5 l3 5 M182 81 l3 -5 l3 5" fill="#fff" stroke-width="2.5"/>
+      <path d="M160 50 L168 40 L170 50Z" fill="${cr}" stroke-width="3"/>
+      <path d="M128 102 Q146 104 156 118" fill="none" stroke-width="6"/>
+      <path d="M156 118 l7 -3 M156 118 l5 6 M156 118 l9 3" fill="none" stroke-width="3.5"/>
+      ${eye(170,56,5)}
+      <circle cx="172" cy="57" r="2.5" fill="${cr}" stroke="none"/>`+close;
   }
   const b='#E0A93E', d='#B9822A', k='#9C6B1E';
   return open+`
@@ -1084,7 +1161,8 @@ function openPick(p){
     : (p === 'you' ? 'Pick your fighter' : `Who will ${DINOS[youId].name} battle?`);
   const groups = [
     ['dino','Dinosaurs','The real deal.'],
-    ['pal','Prehistoric pals','Not dinos, but still totally awesome.']
+    ['pal','Prehistoric pals','Not dinos, but still totally awesome.'],
+    ['myth','Monster mashups','Made-up monsters. Not real, but super fierce!']
   ];
   groups.forEach(([g, title, sub]) => {
     const h = document.createElement('div'); h.className = 'group';
