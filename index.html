@@ -253,7 +253,12 @@ button:focus-visible{outline:4px dashed #fff;outline-offset:3px}
 .confetti{position:fixed;top:-20px;width:10px;height:14px;z-index:30;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(760deg)}}
 
+.plane{position:absolute;top:16%;z-index:5;pointer-events:none;font-size:clamp(40px,10vw,70px);animation:fly 1.2s linear forwards}
+.plane.rev{animation-name:flyrev}
+@keyframes fly{from{left:-15%}to{left:110%}}
+@keyframes flyrev{from{left:110%;transform:scaleX(-1)}to{left:-15%;transform:scaleX(-1)}}
 @media (prefers-reduced-motion:reduce){
+  .plane{display:none}
   .dino-wrap,.stadium.cheer .fan,.stars,.wing,.fighter.shielded::after{animation:none}
   .arena.shake,.fighter.charging,.move.mega-ready,.slash{animation:none}
   .powerup{animation:none}
@@ -424,7 +429,9 @@ const DINOS = {
   blizzard:{ id:'blizzard', group:'myth', name:'Blizzard', kind:'Hybrid rex', blurb:'Ghost-white giant with red spikes.', hp:120, voice:'roar', pitch:72, shout:'Roar',
              moves:[ M('Ghost Chomp','👻','big',22,30,['chomp','bonk'],'CHOMP!',{miss:.18}), M('Hook Claws','🪝','multi',5,8,['slash'],'SLASH!',{hits:[2,3],miss:.1}), M('Spike Shake','🔺','shake',10,14,['stomp'],'STOMP!') ] },
   bones:   { id:'bones', group:'myth', name:'Green Bones', kind:'Skeleton dino', blurb:'Green bones, red eyes, big spikes!', hp:105, voice:'roar', pitch:90, shout:'Roar',
-             moves:[ M('Bone Shatter','💀','mega',10,14,['bonk','crunch'],'BONE SHATTER!',{hits:3}), M('Spike Slam','🔺','big',18,26,['stomp','bonk'],'SLAM!',{miss:.12}), M('Rattle Rattle','🦴','dizzy',7,11,['peck','bonk'],'RATTLE!',{stun:.45}) ] }
+             moves:[ M('Bone Shatter','💀','mega',10,14,['bonk','crunch'],'BONE SHATTER!',{hits:3}), M('Spike Slam','🔺','big',18,26,['stomp','bonk'],'SLAM!',{miss:.12}), M('Rattle Rattle','🦴','dizzy',7,11,['peck','bonk'],'RATTLE!',{stun:.45}) ] },
+  sarge:   { id:'sarge', group:'toy', name:'Sarge', kind:'Toy army man', blurb:'Tiny plastic hero. Big battle plans!', hp:100, voice:'trumpet', pitch:220, shout:'Battle Cry',
+             moves:[ M('Mega Fireblast','🔥','mega',10,14,['fire','bonk'],'MEGA FIREBLAST!',{hits:3,fx:'fire'}), M('Air Support','✈️','multi',5,8,['stomp'],'INCOMING!',{hits:[2,4],miss:.08,fx:'plane',hint:'Planes swoop in!'}), M('Helmet Bonk','🪖','dizzy',8,12,['bonk'],'BONK!',{stun:.4}) ] }
 };
 const POWERUPS = [
   { id:'shield', ico:'🛡️', name:'Shield' },
@@ -892,6 +899,33 @@ function dinoSVG(id){
       <circle cx="173" cy="41" r="2.2" fill="${r}" stroke="none"/>
       <circle cx="204" cy="42" r="2.3" fill="${INK}" stroke="none"/>`+close;
   }
+  if(id==='sarge'){
+    const y='#F2DE2E', s='#CDB81A';
+    const limb = (d, w=14) => `<path d="${d}" fill="none" stroke-width="${w+6}"/><path d="${d}" fill="none" stroke="${y}" stroke-width="${w}"/>`;
+    return open+`
+      <ellipse cx="112" cy="157" rx="78" ry="7" fill="${s}"/>
+      ${limb('M58 142 L98 150')}
+      <ellipse cx="104" cy="150" rx="12" ry="7" fill="${y}"/>
+      ${limb('M62 132 L100 108 L116 146')}
+      <ellipse cx="124" cy="148" rx="13" ry="8" fill="${y}"/>
+      <path d="M48 138 Q42 102 62 78 L90 78 Q98 104 90 136Z" fill="${y}"/>
+      <path d="M50 124 L90 124" fill="none" stroke-width="4"/>
+      <rect x="52" y="124" width="12" height="12" rx="3" fill="${s}"/>
+      <rect x="72" y="124" width="12" height="12" rx="3" fill="${s}"/>
+      <path d="M186 88 L176 152 M186 88 L196 152" fill="none" stroke-width="5"/>
+      <rect x="108" y="78" width="98" height="9" rx="4" fill="${y}"/>
+      <rect x="198" y="75" width="14" height="15" rx="4" fill="${y}"/>
+      <rect x="104" y="72" width="44" height="18" rx="5" fill="${y}"/>
+      <rect x="126" y="48" width="12" height="26" rx="3" fill="${y}"/>
+      <path d="M112 90 L108 104" fill="none" stroke-width="6"/>
+      ${limb('M76 86 Q96 100 112 88', 13)}
+      <circle cx="92" cy="64" r="15" fill="${y}"/>
+      <path d="M72 62 Q72 38 94 38 Q116 38 116 60 Z" fill="${y}"/>
+      <path d="M70 62 L118 60" fill="none" stroke-width="5"/>
+      <path d="M86 44 q8 -4 16 0" fill="none" stroke="#fff" stroke-width="3"/>
+      ${eye(100,68,4.5)}
+      <path d="M98 78 q5 2 9 -1" fill="none" stroke-width="3"/>`+close;
+  }
   if(id==='bones'){
     const g='#8FE08A', sp='#3FA34D', red='#FF3040';
     const bn = (d, w=8) => `<path d="${d}" fill="none" stroke-width="${w+6}"/><path d="${d}" fill="none" stroke="${g}" stroke-width="${w}"/>`;
@@ -1290,7 +1324,8 @@ function openPick(p){
   const groups = [
     ['dino','Dinosaurs','The real deal.'],
     ['pal','Prehistoric pals','Not dinos, but still totally awesome.'],
-    ['myth','Monster mashups','Made-up monsters. Not real, but super fierce!']
+    ['myth','Monster mashups','Made-up monsters. Not real, but super fierce!'],
+    ['toy','Toy box heroes','Not dinos at all, but ready for battle!']
   ];
   groups.forEach(([g, title, sub]) => {
     const h = document.createElement('div'); h.className = 'group';
@@ -1367,6 +1402,7 @@ function makeFighter(id, el){
   return { d, hp:d.hp, max:d.hp, powered:false, sure:false, snacks:2, megaUsed:false, shield:false, extra:false, dodging:false, stunned:false, justRecovered:false, el, wrap:el.querySelector('.dino-wrap') };
 }
 function hintFor(m){
+  if(m.hint) return m.hint;
   if(m.type === 'mega') return 'Once per battle!';
   return { big:'Big hit. Might miss!', multi:`Hits ${m.hits?.[0]} to ${m.hits?.[1]} times`, dizzy:'Can make them dizzy', drain:'Heals you too', shake:'Never misses' }[m.type];
 }
@@ -1498,6 +1534,11 @@ function slashFx(t, i){
   el.style.setProperty('--r', (t === G.p ? 35 : -35) + 'deg');
   arena.appendChild(el); setTimeout(() => el.remove(), 600);
 }
+function planeFx(a){
+  const el = document.createElement('div');
+  el.className = 'plane' + (a === G.p ? '' : ' rev'); el.textContent = '✈️';
+  arena.appendChild(el); setTimeout(() => el.remove(), 1300);
+}
 async function megaAttack(a, t, mv){
   a.megaUsed = true;
   announce(`${a.d.name} is charging up...`);
@@ -1511,7 +1552,8 @@ async function megaAttack(a, t, mv){
   const mult = (sup ? 1.5 : 1) * (a === G.c && G.mode === 1 ? .85 : 1);
   pop(t, mv.word, '#FF8A8E', -18);
   for(let i=0;i<mv.hits;i++){
-    slashFx(t, i); playSfx(mv.sfx); anim(arena, 'shake', 300);
+    if(mv.fx === 'fire') pop(t, '🔥', '#FFB347', 10 - i * 12, false, (i - 1) * 9); else slashFx(t, i);
+    playSfx(mv.sfx); anim(arena, 'shake', 300);
     applyHit(t, Math.round(rand(mv.min, mv.max) * mult), (i - 1) * 7);
     await sleep(340);
     if(t.hp <= 0) break;
@@ -1523,6 +1565,7 @@ async function megaAttack(a, t, mv){
 async function attack(a, t, mv){
   if(mv.type === 'mega') return megaAttack(a, t, mv);
   announce(`${a.d.name} used ${mv.name}!`);
+  if(mv.fx === 'plane'){ planeFx(a); Snd.whoosh(); await sleep(650); }
   const sup = a.powered, sure = a.sure;
   if(mv.type === 'shake'){ anim(a.el, 'jump', 600); await sleep(400); }
   else { anim(a.el, 'lunge', 500); Snd.whoosh(); await sleep(260); }

@@ -1,5 +1,5 @@
 // Dino Dome offline cache. Bump VERSION whenever you change any file so players get the update.
-const VERSION = 'dino-dome-v4';
+const VERSION = 'dino-dome-v5';
 const FILES = [
   './',
   'index.html',

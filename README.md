@@ -1,6 +1,6 @@
 # Dino Dome
 
-A turn-based dinosaur battle game for kids. 23 fighters, 1 or 2 players, power-ups, and an original soundtrack. It's a plain static site: no build step, no server code, no database.
+A turn-based dinosaur battle game for kids. 24 fighters, 1 or 2 players, power-ups, and an original soundtrack. It's a plain static site: no build step, no server code, no database.
 
 ## What's inside
 
