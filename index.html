@@ -422,7 +422,9 @@ const DINOS = {
   rhino:   { id:'rhino', group:'pal', name:'Bumper', kind:'Woolly rhino', blurb:'Shaggy, grumpy, giant horn.', hp:125, voice:'snarl', pitch:95, shout:'Snort',
              moves:[ M('Horn Ram','🦏','big',18,26,['whoosh','bonk'],'RAM!',{miss:.12}), M('Fuzzy Charge','💨','dizzy',8,12,['stomp','bonk'],'CRASH!',{stun:.4}), STOMP ] },
   blizzard:{ id:'blizzard', group:'myth', name:'Blizzard', kind:'Hybrid rex', blurb:'Ghost-white giant with red spikes.', hp:120, voice:'roar', pitch:72, shout:'Roar',
-             moves:[ M('Ghost Chomp','👻','big',22,30,['chomp','bonk'],'CHOMP!',{miss:.18}), M('Hook Claws','🪝','multi',5,8,['slash'],'SLASH!',{hits:[2,3],miss:.1}), M('Spike Shake','🔺','shake',10,14,['stomp'],'STOMP!') ] }
+             moves:[ M('Ghost Chomp','👻','big',22,30,['chomp','bonk'],'CHOMP!',{miss:.18}), M('Hook Claws','🪝','multi',5,8,['slash'],'SLASH!',{hits:[2,3],miss:.1}), M('Spike Shake','🔺','shake',10,14,['stomp'],'STOMP!') ] },
+  bones:   { id:'bones', group:'myth', name:'Green Bones', kind:'Skeleton dino', blurb:'Green bones, red eyes, big spikes!', hp:105, voice:'roar', pitch:90, shout:'Roar',
+             moves:[ M('Bone Shatter','💀','mega',10,14,['bonk','crunch'],'BONE SHATTER!',{hits:3}), M('Spike Slam','🔺','big',18,26,['stomp','bonk'],'SLAM!',{miss:.12}), M('Rattle Rattle','🦴','dizzy',7,11,['peck','bonk'],'RATTLE!',{stun:.45}) ] }
 };
 const POWERUPS = [
   { id:'shield', ico:'🛡️', name:'Shield' },
@@ -889,6 +891,35 @@ function dinoSVG(id){
       ${eye(170,40,6)}
       <circle cx="173" cy="41" r="2.2" fill="${r}" stroke="none"/>
       <circle cx="204" cy="42" r="2.3" fill="${INK}" stroke="none"/>`+close;
+  }
+  if(id==='bones'){
+    const g='#8FE08A', sp='#3FA34D', red='#FF3040';
+    const bn = (d, w=8) => `<path d="${d}" fill="none" stroke-width="${w+6}"/><path d="${d}" fill="none" stroke="${g}" stroke-width="${w}"/>`;
+    const knob = (x,y,r=6) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${g}" stroke-width="3.5"/>`;
+    let ribs = '';
+    for(let x=78;x<=138;x+=12){ const y = 84 - (x-78)*.08; ribs += bn(`M${x} ${y} Q${x+12} ${y+16} ${x+2} ${y+32}`, 5); }
+    return open+`
+      <g fill="${sp}" stroke-width="4">
+        <path d="M66 84 L70 54 L86 80Z"/><path d="M84 80 L94 44 L106 78Z"/><path d="M104 78 L116 40 L126 78Z"/>
+        <path d="M124 78 L136 48 L144 80Z"/><path d="M142 76 L156 54 L158 74Z"/>
+        <path d="M34 80 L30 60 L46 76Z"/><path d="M18 64 L8 48 L26 58Z"/>
+      </g>
+      ${bn('M74 88 L64 120 L76 152')}${bn('M92 86 L86 120 L96 152')}
+      ${bn('M128 82 L138 116 L128 152')}${bn('M144 80 L156 114 L148 152')}
+      ${knob(64,120)}${knob(86,120)}${knob(138,116)}${knob(156,114)}
+      ${bn('M68 154 L90 154 M88 154 L110 154 M120 154 L142 154 M140 154 L162 154', 6)}
+      ${bn('M20 40 Q10 62 30 80 Q50 94 76 86 Q110 76 142 80 Q156 74 164 60', 10)}
+      ${ribs}
+      ${knob(76,86,7)}${knob(142,80,7)}
+      <path d="M156 42 Q164 26 190 30 L210 40 Q216 52 204 56 L162 60Z" fill="${g}"/>
+      <path d="M168 62 L202 62 Q198 74 176 72Z" fill="${g}"/>
+      <path d="M172 58 l3 5 l3 -5 M182 58 l3 5 l3 -5 M192 58 l3 5 l3 -5" fill="#fff" stroke-width="2.5"/>
+      <circle cx="176" cy="42" r="8" fill="${INK}"/>
+      <circle cx="177" cy="42" r="4" fill="${red}" stroke="none"/>
+      <circle cx="178.5" cy="40.5" r="1.4" fill="#fff" stroke="none"/>
+      <circle cx="204" cy="44" r="2.5" fill="${INK}" stroke="none"/>
+      <path d="M160 34 L152 20 L166 30Z" fill="${sp}" stroke-width="3.5"/>
+      <path d="M170 30 L166 14 L180 28Z" fill="${sp}" stroke-width="3.5"/>`+close;
   }
   const b='#E0A93E', d='#B9822A', k='#9C6B1E';
   return open+`
